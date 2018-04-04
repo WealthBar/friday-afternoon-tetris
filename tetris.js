@@ -1,74 +1,119 @@
 {
-  let tetrisWell = createGrid(10, 22);
-  let pieceBorder = createGrid(4, 4);
+  function createGrid(
+    {
+      width,
+      height,
+    },
+  ) {
+    const grid = Array(height);
+    for (let h = 0; h < height; ++h) {
+      grid[h] = Array(width).fill(0);
+    }
+    return grid;
+  }
+
+  const width = 10;
+  const height = 22;
+  let tetrisWell = createGrid(
+    {
+      width,
+      height,
+    },
+  );
+
   let canvas = document.getElementById('canvas');
   let ctx = canvas.getContext('2d');
-  let droppingX = 5;
-  let droppingY = 22;
+  let droppingH = 22;
+  let droppingW = 5;
   let droppingDelta = 0;
   let droppingRate = 1000;
-  let drawWell = copyWell(tetrisWell);
 
-  MainLoop.setUpdate(update).setDraw(draw).setEnd(end).start();
+  MainLoop.setUpdate(update)
+    .setDraw(draw)
+    .setEnd(end)
+    .start();
 
-  function createGrid(width, height) {
-    let array = []
-    for (let i = 0; i < height; i++) {
-      array.push(Array(width).fill(0))
+  function end(
+    fps,
+    panic,
+  ) {
+    if (panic) {
+      MainLoop.resetFrameDelta();
     }
-    return array;
-  };
-
-  function end() {
-    return false;
-  };
-
-  function copyWell() {
-    let array = []
-    for (let i = 0; i < tetrisWell.length; i++) {
-      array.push(Array.from(tetrisWell[i]))
-    }
-    return array;
-  };
+  }
 
   function update(delta) {
-    drawWell = copyWell(tetrisWell);
-
     droppingDelta += delta;
 
     if (droppingDelta > droppingRate) {
-      droppingY -= 1;
+      droppingH -= 1;
       droppingDelta -= droppingRate;
+      if (droppingH < 0) {
+        droppingH = height;
+      }
     }
+  }
 
-    drawWell[droppingX][droppingY] = 1;
-    // tetrisWell.map((row, i) => {
-    //   row.map((piece, j) => {
-    //     // tetrisWell[i][j] = Math.random() > 0.5 ? 1 : 0;
-    //     // tetrisWell[i][j] = 
-    //     if (i === 0 || j === 0) {
-    //       // tetrisWell[i][j] = Math.random() > 0.5 ? 1 : 0;
-    //     tetrisWell[j][i] = 1;
-    //     }
-    //   })
-    // })
+  let pieceWidth = canvas.width / tetrisWell[0].length;
+  let pieceHeight = canvas.height / tetrisWell.length;
+
+  tetrisWell[2][4] = 1;
+  console.log(tetrisWell);
+
+  function toScreenCoords(
+    h,
+    w,
+  ) {
+    return [w * pieceWidth, canvas.height - (h + 1) * pieceHeight];
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+    );
 
-    let pieceWidth = canvas.width/tetrisWell.length;
-    let pieceHeight = canvas.height/tetrisWell[0].length;
+    ctx.strokeStyle = 'black';
+    ctx.fillStyle = 'black';
+    ctx.imageSmoothingEnabled = false;
+    ctx.strokeRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+    );
 
-    tetrisWell.map((row, i) => {
-      row.map((piece, j) => {
-        if (drawWell[i][j] === 1) {
-          let x = i * pieceWidth;
-          let y = j * pieceHeight;
+    for (let h = 0; h < height; ++h) {
+      for (let w = 0; w < width; ++w) {
+        if (tetrisWell[h][w] === 1) {
+          let [x, y] = toScreenCoords(
+            h,
+            w,
+          );
 
-          ctx.fillRect(x, canvas.height - y - pieceHeight, pieceWidth, pieceHeight);
+          ctx.fillRect(
+            x,
+            y,
+            pieceWidth,
+            pieceHeight,
+          );
         }
-      })
-    })
-  };
+      }
+    }
+
+    {
+      const [x, y] = toScreenCoords(
+        droppingH,
+        droppingW,
+      );
+      ctx.fillRect(
+        x,
+        y,
+        pieceWidth,
+        pieceHeight,
+      );
+    }
+  }
 }
