@@ -1,0 +1,15 @@
+.DS_Store
+dist/
+/.nyc_output
+/.vscode
+/coverage
+/node_modules
+/.idea
+.env
+package-lock.json
+yarn-error.log
+log.txt
+*.csv
+invoices*/
+*.zip
+.nyc_cache/
