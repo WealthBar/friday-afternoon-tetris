@@ -12,21 +12,26 @@
     return grid;
   }
 
+  // Scoped to this function land
   const width = 10;
   const height = 22;
+  const keyPressed = Object.create(null);
+  const leftRightInputRate = 100;
+
+  let canvas = document.getElementById('canvas');
+  let ctx = canvas.getContext('2d');
+  let droppingHeight = 22;
+  let droppingWidth = 5;
+  let droppingDelta = 0;
+  let droppingRate = 1000;
+  let leftRightInputDelta = 0;
+
   let tetrisWell = createGrid(
     {
       width,
       height,
     },
   );
-
-  let canvas = document.getElementById('canvas');
-  let ctx = canvas.getContext('2d');
-  let droppingH = 22;
-  let droppingW = 5;
-  let droppingDelta = 0;
-  let droppingRate = 1000;
 
   MainLoop.setUpdate(update)
     .setDraw(draw)
@@ -42,23 +47,49 @@
     }
   }
 
-  function update(delta) {
+  function updateDrop(delta) {
     droppingDelta += delta;
-
     if (droppingDelta > droppingRate) {
-      droppingH -= 1;
+      droppingHeight -= 1;
       droppingDelta -= droppingRate;
-      if (droppingH < 0) {
-        droppingH = height;
+      if (droppingHeight < 0) {
+        droppingHeight = height;
       }
     }
+  }
+
+  // TODO: In the glorious future:
+  // function rateCheck(delta, rate, functionThatYouWant);
+
+  function handleLeftRightInput() {
+    if (keyPressed.ArrowLeft) {
+      if (droppingWidth > 0) { droppingWidth -= 1; }
+    }
+
+    if (keyPressed.ArrowRight) {
+      if (droppingWidth < width - 1) { droppingWidth += 1; }
+    }
+  }
+
+  function handleKeyInputs(delta) {
+    leftRightInputDelta += delta;
+    if (leftRightInputDelta > leftRightInputRate) {
+      leftRightInputDelta -= leftRightInputRate;
+      handleLeftRightInput();
+    }
+
+    lastInputTime = Date.now
+  }
+
+  function update(delta) {
+    handleKeyInputs(delta);
+    updateDrop(delta);
   }
 
   let pieceWidth = canvas.width / tetrisWell[0].length;
   let pieceHeight = canvas.height / tetrisWell.length;
 
   tetrisWell[2][4] = 1;
-  console.log(tetrisWell);
 
   function toScreenCoords(
     h,
@@ -105,8 +136,8 @@
 
     {
       const [x, y] = toScreenCoords(
-        droppingH,
-        droppingW,
+        droppingHeight,
+        droppingWidth,
       );
       ctx.fillRect(
         x,
@@ -116,4 +147,14 @@
       );
     }
   }
+
+  document.addEventListener('keyup', (event) => {
+    const {key} = event;
+    delete keyPressed[key];
+  }, false);
+
+  document.addEventListener('keydown', (event) => {
+    const {key} = event;
+    keyPressed[key] = 1;
+  }, false);
 }
