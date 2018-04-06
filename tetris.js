@@ -24,7 +24,42 @@
   let droppingWidth = 5;
   let droppingDelta = 0;
   let droppingRate = 1000;
+  let droppingTetromino = 1;
   let leftRightInputDelta = 0;
+
+  // Tetromino
+  const tetrominos = [
+    {
+      width: 2,
+      height: 3,
+      piece: [
+        [0,0,0,0],
+        [1,0,0,0],
+        [1,0,0,0],
+        [1,1,0,0],
+      ]
+    },
+    {
+      width: 3,
+      height: 2,
+      piece: [
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,1,0,0],
+        [1,1,1,0],
+      ]
+    },
+    {
+      width: 1,
+      height: 4,
+      piece: [
+        [1,0,0,0],
+        [1,0,0,0],
+        [1,0,0,0],
+        [1,0,0,0],
+      ]
+    },
+  ];
 
   let tetrisWell = createGrid(
     {
@@ -67,7 +102,7 @@
     }
 
     if (keyPressed.ArrowRight) {
-      if (droppingWidth < width - 1) { droppingWidth += 1; }
+      if (droppingWidth < width - tetrominos[droppingTetromino].width) { droppingWidth += 1; }
     }
   }
 
@@ -98,7 +133,7 @@
     return [w * pieceWidth, canvas.height - (h + 1) * pieceHeight];
   }
 
-  function draw() {
+  function drawPlayerArea() {
     ctx.clearRect(
       0,
       0,
@@ -115,7 +150,9 @@
       canvas.width,
       canvas.height,
     );
+  }
 
+  function drawWell() {
     for (let h = 0; h < height; ++h) {
       for (let w = 0; w < width; ++w) {
         if (tetrisWell[h][w] === 1) {
@@ -133,19 +170,33 @@
         }
       }
     }
+  }
 
-    {
-      const [x, y] = toScreenCoords(
-        droppingHeight,
-        droppingWidth,
-      );
-      ctx.fillRect(
-        x,
-        y,
-        pieceWidth,
-        pieceHeight,
-      );
+  function drawTetromino() {
+    currentTetromino = tetrominos[droppingTetromino].piece;
+    for (let i = 0; i < currentTetromino.length; i++) {
+      for (let j = 0; j < currentTetromino[i].length; j++) {
+        if (currentTetromino[i][j] !== 1) { continue; }
+
+        const [x, y] = toScreenCoords(
+          droppingHeight - i,
+          droppingWidth + j,
+        );
+
+        ctx.fillRect(
+          x,
+          y,
+          pieceWidth,
+          pieceHeight,
+        );
+      }
     }
+  }
+
+  function draw() {
+    drawPlayerArea();
+    drawWell();
+    drawTetromino();
   }
 
   document.addEventListener('keyup', (event) => {
