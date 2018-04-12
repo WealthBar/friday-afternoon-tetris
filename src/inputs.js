@@ -3,16 +3,6 @@ const movementInputRate = 100;
 let movementInputDelta = 0;
 let flipKeyPressed = false;
 
-function handleMovement() {
-  if (keyPressed.ArrowLeft) {
-    if (droppingWidth > 0) { droppingWidth -= 1; }
-  }
-
-  if (keyPressed.ArrowRight) {
-    if (droppingWidth < width - tetrominos[droppingTetromino].width) { droppingWidth += 1; }
-  }
-}
-
 function flipLeft(orientation) {
   switch(orientation) {
     case 'pieceDown':
@@ -41,6 +31,19 @@ function handleFlip() {
   if (keyPressed.ArrowUp && !flipKeyPressed) {
     flipKeyPressed = true;
     pieceOrientation = flipLeft(pieceOrientation);
+  }
+}
+
+function handleMovement() {
+  if (keyPressed.ArrowLeft) {
+    let leftmostCollisionBlock = getLeftmostCollision(tetrominos[droppingTetromino][pieceOrientation]);
+    if (droppingWidth > -leftmostCollisionBlock) { droppingWidth -= 1; }
+  }
+
+  if (keyPressed.ArrowRight) {
+    let rightmostCollisionBlock = getRightmostCollision(tetrominos[droppingTetromino][pieceOrientation]);
+    console.log(rightmostCollisionBlock);
+    if (droppingWidth < width - rightmostCollisionBlock) { droppingWidth += 1; }
   }
 }
 
