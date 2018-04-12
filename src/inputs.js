@@ -31,19 +31,15 @@ function handleFlip() {
   if (keyPressed.ArrowUp && !flipKeyPressed) {
     flipKeyPressed = true;
     pieceOrientation = flipLeft(pieceOrientation);
+    // TODO: Bump if out of bounds
   }
 }
 
 function handleMovement() {
-  if (keyPressed.ArrowLeft) {
-    let leftmostCollisionBlock = getLeftmostCollision(tetrominos[droppingTetromino][pieceOrientation]);
-    if (droppingWidth > -leftmostCollisionBlock) { droppingWidth -= 1; }
-  }
-
-  if (keyPressed.ArrowRight) {
-    let rightmostCollisionBlock = getRightmostCollision(tetrominos[droppingTetromino][pieceOrientation]);
-    console.log(rightmostCollisionBlock);
-    if (droppingWidth < width - rightmostCollisionBlock) { droppingWidth += 1; }
+  tetromino = tetrominos[droppingTetromino][pieceOrientation];
+  if (isNotColliding(keyPressed, droppingWidth, tetromino)) {
+    if (keyPressed.ArrowLeft) { droppingWidth -= 1; }
+    if (keyPressed.ArrowRight) { droppingWidth += 1; }
   }
 }
 

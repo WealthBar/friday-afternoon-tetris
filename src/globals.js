@@ -1,5 +1,5 @@
-const width = 10;
-const height = 22;
+const wellWidth = 10;
+const wellHeight = 22;
 
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');

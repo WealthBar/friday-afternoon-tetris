@@ -19,7 +19,7 @@
       droppingHeight -= 1;
       droppingDelta -= droppingRate;
       if (droppingHeight < 0) {
-        droppingHeight = height;
+        droppingHeight = wellHeight;
       }
     }
   }

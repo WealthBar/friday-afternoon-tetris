@@ -10,7 +10,7 @@ function getLeftmostCollision(tetromino) {
     }
   }
 
-  return leftmostIndex;
+  return -leftmostIndex;
 }
 
 function getRightmostCollision(tetromino) {
@@ -26,4 +26,14 @@ function getRightmostCollision(tetromino) {
   }
 
   return rightmostIndex + 1;
+}
+
+function isNotColliding(keyPressed, width, tetromino) {
+  let leftmostCollisionBlock = getLeftmostCollision(tetromino);
+  let rightmostCollisionBlock = getRightmostCollision(tetromino);
+  let notColliding = false;
+  if (keyPressed.ArrowLeft && width > leftmostCollisionBlock) { notColliding = true; }
+  if (keyPressed.ArrowRight && width < wellWidth - rightmostCollisionBlock) { notColliding = true; }
+
+  return notColliding;
 }
