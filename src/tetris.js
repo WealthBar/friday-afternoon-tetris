@@ -42,6 +42,6 @@
   function draw() {
     drawPlayerArea();
     drawWell();
-    drawTetromino();
+    drawTetromino(pieceOrientation);
   }
 }

@@ -8,3 +8,4 @@ let droppingWidth = 5;
 let droppingDelta = 0;
 let droppingRate = 1000;
 let droppingTetromino = 1;
+let pieceOrientation = 'pieceDown';

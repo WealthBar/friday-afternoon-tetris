@@ -69,8 +69,8 @@ function pickTetrominoColor(x, y) {
   return gradient;
 }
 
-function drawTetromino() {
-  currentTetromino = tetrominos[droppingTetromino].piece;
+function drawTetromino(orientation) {
+  currentTetromino = tetrominos[droppingTetromino][orientation];
   for (let i = 0; i < currentTetromino.length; i++) {
     for (let j = 0; j < currentTetromino[i].length; j++) {
       if (currentTetromino[i][j] !== 1) { continue; }
