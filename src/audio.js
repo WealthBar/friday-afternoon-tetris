@@ -18,7 +18,7 @@ function stopAudio() {
   document.getElementById("sound-on").style.display = 'block';
 }
 
-function playFlip() {
+function playRotate() {
   if (audioPlaying) {
     rotate.play();
   }

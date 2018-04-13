@@ -27,11 +27,11 @@ function rotateRight(orientation) {
   // TODO
 }
 
-function handleFlip() {
+function handleRotate() {
   if (keyPressed.ArrowUp && !rotateKeyPressed) {
     rotateKeyPressed = true;
     pieceOrientation = rotateLeft(pieceOrientation);
-    playFlip();
+    playRotate();
     // TODO: Bump if out of bounds
   }
 }
@@ -49,7 +49,7 @@ function handleMovement(delta) {
 }
 
 function handleKeyInputs(delta) {
-  handleFlip();
+  handleRotate();
   handleMovement(delta);
   lastInputTime = Date.now
 }
