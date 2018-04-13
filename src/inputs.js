@@ -1,9 +1,9 @@
 const keyPressed = Object.create(null);
 const movementInputRate = 100;
 let movementInputDelta = 0;
-let flipKeyPressed = false;
+let rotateKeyPressed = false;
 
-function flipLeft(orientation) {
+function rotateLeft(orientation) {
   switch(orientation) {
     case 'pieceDown':
       return 'pieceRight';
@@ -23,14 +23,14 @@ function flipLeft(orientation) {
   }
 }
 
-function flipRight(orientation) {
+function rotateRight(orientation) {
   // TODO
 }
 
 function handleFlip() {
-  if (keyPressed.ArrowUp && !flipKeyPressed) {
-    flipKeyPressed = true;
-    pieceOrientation = flipLeft(pieceOrientation);
+  if (keyPressed.ArrowUp && !rotateKeyPressed) {
+    rotateKeyPressed = true;
+    pieceOrientation = rotateLeft(pieceOrientation);
     playFlip();
     // TODO: Bump if out of bounds
   }
@@ -55,7 +55,7 @@ function handleKeyInputs(delta) {
 }
 
 function resetKeyPress() {
-  flipKeyPressed = false;
+  rotateKeyPressed = false;
 }
 
 // Event listeners

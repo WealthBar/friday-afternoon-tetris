@@ -2,7 +2,7 @@ let audioPlaying = false;
 const music = new Audio('audio/music/tetris.mp3')
 music.loop = true;
 
-const flip = new Audio('audio/sfx/flip.wav');
+const rotate = new Audio('audio/sfx/rotate.wav');
 
 function playAudio() {
   audioPlaying = true;
@@ -20,6 +20,6 @@ function stopAudio() {
 
 function playFlip() {
   if (audioPlaying) {
-    flip.play();
+    rotate.play();
   }
 }
