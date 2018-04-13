@@ -34,7 +34,7 @@ function addBorders() {
 
 addBorders();
 
-tetrisWell[3][4] = 1;
+// tetrisWell[3][4] = 1;
 
 let pieceWidth = canvas.width / wellWidth;
 let pieceHeight = canvas.height / wellHeight;
