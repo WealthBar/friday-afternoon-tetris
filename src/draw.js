@@ -1,27 +1,50 @@
 function createGrid(
   {
-    wellWidth,
-    wellHeight,
+    width,
+    height,
   },
 ) {
-  const grid = Array(wellHeight);
-  for (let h = 0; h < wellHeight; ++h) {
-    grid[h] = Array(wellWidth).fill(0);
+  const grid = Array(height);
+  for (let h = 0; h < height; ++h) {
+    grid[h] = Array(width).fill(0);
   }
   return grid;
 }
 
 let tetrisWell = createGrid(
   {
-    wellWidth,
-    wellHeight,
+    width: wellWidth + 2,
+    height: wellHeight + 1,
   },
 );
 
-tetrisWell[2][4] = 1;
+const wellBorderLeft = -1;
+const wellBorderRight = -2;
+const wellBorderBottom = -3;
 
-let pieceWidth = canvas.width / tetrisWell[0].length;
-let pieceHeight = canvas.height / tetrisWell.length;
+function addBorders() {
+  for (let i = 0; i < tetrisWell.length; ++i) {
+    tetrisWell[i][0] = wellBorderLeft;
+    tetrisWell[i][wellWidth + 1] = wellBorderRight;
+  }
+  for (let i = 0; i < tetrisWell[0].length; ++i) {
+    tetrisWell[0][i] = wellBorderBottom;
+  }
+}
+
+addBorders();
+
+tetrisWell[3][4] = 1;
+
+let pieceWidth = canvas.width / wellWidth;
+let pieceHeight = canvas.height / wellHeight;
+
+function toScreenCoords(
+  h,
+  w,
+) {
+  return [(w - 1) * pieceWidth, canvas.height - h * pieceHeight];
+}
 
 function drawPlayerArea() {
   ctx.clearRect(
@@ -45,18 +68,18 @@ function drawPlayerArea() {
 function drawWell() {
   for (let h = 0; h < wellHeight; ++h) {
     for (let w = 0; w < wellWidth; ++w) {
-      if (tetrisWell[h][w] === 1) {
+      if (tetrisWell[h][w] !== 0) {
         let [x, y] = toScreenCoords(
           h,
           w,
         );
 
-        // ctx.fillRect(
-        //   x,
-        //   y,
-        //   pieceWidth,
-        //   pieceHeight,
-        // );
+        ctx.fillRect(
+          x,
+          y,
+          pieceWidth,
+          pieceHeight,
+        );
       }
     }
   }

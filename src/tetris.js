@@ -32,12 +32,7 @@
     updateDrop(delta);
   }
 
-  function toScreenCoords(
-    h,
-    w,
-  ) {
-    return [w * pieceWidth, canvas.height - (h + 1) * pieceHeight];
-  }
+
 
   function draw() {
     drawPlayerArea();
