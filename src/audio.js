@@ -1,5 +1,7 @@
 let audioPlaying = false;
 const music = new Audio('audio/music/tetris.mp3')
+music.loop = true;
+
 const flip = new Audio('audio/sfx/flip.wav');
 
 function playAudio() {

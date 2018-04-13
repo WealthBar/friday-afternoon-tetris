@@ -1,9 +1,7 @@
 // Tetromino
 const tetrominos = [
   {
-    width: 2,
-    height: 3,
-    piece: [
+    pieceDown: [
       [0,0,0,0],
       [1,0,0,0],
       [1,0,0,0],
@@ -11,8 +9,6 @@ const tetrominos = [
     ]
   },
   {
-    width: 3,
-    height: 2,
     pieceDown: [
       [0,0,0,0],
       [0,1,0,0],
@@ -39,9 +35,7 @@ const tetrominos = [
     ],
   },
   {
-    width: 1,
-    height: 4,
-    piece: [
+    pieceDown: [
       [1,0,0,0],
       [1,0,0,0],
       [1,0,0,0],
