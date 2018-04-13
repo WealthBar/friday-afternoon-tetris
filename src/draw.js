@@ -1,20 +1,20 @@
 function createGrid(
   {
-    width,
-    height,
+    wellWidth,
+    wellHeight,
   },
 ) {
-  const grid = Array(height);
-  for (let h = 0; h < height; ++h) {
-    grid[h] = Array(width).fill(0);
+  const grid = Array(wellHeight);
+  for (let h = 0; h < wellHeight; ++h) {
+    grid[h] = Array(wellWidth).fill(0);
   }
   return grid;
 }
 
 let tetrisWell = createGrid(
   {
-    width,
-    height,
+    wellWidth,
+    wellHeight,
   },
 );
 
@@ -43,8 +43,8 @@ function drawPlayerArea() {
 }
 
 function drawWell() {
-  for (let h = 0; h < height; ++h) {
-    for (let w = 0; w < width; ++w) {
+  for (let h = 0; h < wellHeight; ++h) {
+    for (let w = 0; w < wellWidth; ++w) {
       if (tetrisWell[h][w] === 1) {
         let [x, y] = toScreenCoords(
           h,
@@ -69,8 +69,8 @@ function pickTetrominoColor(x, y) {
   return gradient;
 }
 
-function drawTetromino() {
-  currentTetromino = tetrominos[droppingTetromino].piece;
+function drawTetromino(orientation) {
+  currentTetromino = tetrominos[droppingTetromino][orientation];
   for (let i = 0; i < currentTetromino.length; i++) {
     for (let j = 0; j < currentTetromino[i].length; j++) {
       if (currentTetromino[i][j] !== 1) { continue; }

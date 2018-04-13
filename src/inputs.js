@@ -1,32 +1,68 @@
 const keyPressed = Object.create(null);
-const leftRightInputRate = 100;
-let leftRightInputDelta = 0;
+const movementInputRate = 100;
+let movementInputDelta = 0;
+let rotateKeyPressed = false;
 
-
-function handleLeftRightInput() {
-  if (keyPressed.ArrowLeft) {
-    if (droppingWidth > 0) { droppingWidth -= 1; }
+function rotateLeft(orientation) {
+  switch(orientation) {
+    case 'pieceDown':
+      return 'pieceRight';
+      break;
+    case 'pieceLeft':
+      return 'pieceDown';
+      break;
+    case 'pieceUp':
+      return 'pieceLeft';
+      break;
+    case 'pieceRight':
+      return 'pieceUp';
+      break;
+    default:
+      console.log('why');
+      break;
   }
+}
 
-  if (keyPressed.ArrowRight) {
-    if (droppingWidth < width - tetrominos[droppingTetromino].width) { droppingWidth += 1; }
+function rotateRight(orientation) {
+  // TODO
+}
+
+function handleRotate() {
+  if (keyPressed.ArrowUp && !rotateKeyPressed) {
+    rotateKeyPressed = true;
+    pieceOrientation = rotateLeft(pieceOrientation);
+    playRotate();
+    // TODO: Bump if out of bounds
+  }
+}
+
+function handleMovement(delta) {
+  movementInputDelta += delta;
+  if (movementInputDelta > movementInputRate) {
+    movementInputDelta -= movementInputRate;
+    tetromino = tetrominos[droppingTetromino][pieceOrientation];
+    if (isNotColliding(keyPressed, droppingWidth, tetromino)) {
+      if (keyPressed.ArrowLeft) { droppingWidth -= 1; }
+      if (keyPressed.ArrowRight) { droppingWidth += 1; }
+    }
   }
 }
 
 function handleKeyInputs(delta) {
-  leftRightInputDelta += delta;
-  if (leftRightInputDelta > leftRightInputRate) {
-    leftRightInputDelta -= leftRightInputRate;
-    handleLeftRightInput();
-  }
-
+  handleRotate();
+  handleMovement(delta);
   lastInputTime = Date.now
+}
+
+function resetKeyPress() {
+  rotateKeyPressed = false;
 }
 
 // Event listeners
 document.addEventListener('keyup', (event) => {
   const {key} = event;
   delete keyPressed[key];
+  resetKeyPress();
 }, false);
 
 document.addEventListener('keydown', (event) => {
