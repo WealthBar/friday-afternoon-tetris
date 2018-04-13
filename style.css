@@ -1,6 +1,7 @@
-h1 {
-  text-align: center;
-  color: white;
+.logo {
+  display: block;
+  margin: 22px auto;
+  width: 300px;
 }
 
 .fa-bell-slash, .fa-bell {
