@@ -36,23 +36,21 @@ function handleFlip() {
   }
 }
 
-function handleMovement() {
-  tetromino = tetrominos[droppingTetromino][pieceOrientation];
-  if (isNotColliding(keyPressed, droppingWidth, tetromino)) {
-    if (keyPressed.ArrowLeft) { droppingWidth -= 1; }
-    if (keyPressed.ArrowRight) { droppingWidth += 1; }
+function handleMovement(delta) {
+  movementInputDelta += delta;
+  if (movementInputDelta > movementInputRate) {
+    movementInputDelta -= movementInputRate;
+    tetromino = tetrominos[droppingTetromino][pieceOrientation];
+    if (isNotColliding(keyPressed, droppingWidth, tetromino)) {
+      if (keyPressed.ArrowLeft) { droppingWidth -= 1; }
+      if (keyPressed.ArrowRight) { droppingWidth += 1; }
+    }
   }
 }
 
 function handleKeyInputs(delta) {
   handleFlip();
-
-  movementInputDelta += delta;
-  if (movementInputDelta > movementInputRate) {
-    movementInputDelta -= movementInputRate;
-    handleMovement();
-  }
-
+  handleMovement(delta);
   lastInputTime = Date.now
 }
 
