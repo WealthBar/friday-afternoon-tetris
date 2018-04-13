@@ -31,6 +31,7 @@ function handleFlip() {
   if (keyPressed.ArrowUp && !flipKeyPressed) {
     flipKeyPressed = true;
     pieceOrientation = flipLeft(pieceOrientation);
+    playFlip();
     // TODO: Bump if out of bounds
   }
 }
