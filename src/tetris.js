@@ -16,10 +16,19 @@
   function updateDrop(delta) {
     droppingDelta += delta;
     if (droppingDelta > droppingRate) {
-      droppingHeight -= 1;
-      droppingDelta -= droppingRate;
-      if (droppingHeight < 0) {
-        droppingHeight = wellHeight;
+      const colliding = considerMovingThatWay({
+        offsetH: -1,
+        tetromino,
+      });
+
+      if (!colliding) {
+        droppingHeight -= 1;
+        droppingDelta -= droppingRate;
+        // todo: add some latch time before committing the the well.
+      } else {
+        // todo: copy into well
+        // todo: spawn new piece
+        droppingHeight = wellHeight; // piece height
       }
     }
   }
@@ -31,8 +40,6 @@
     handleKeyInputs(delta);
     updateDrop(delta);
   }
-
-
 
   function draw() {
     drawPlayerArea();

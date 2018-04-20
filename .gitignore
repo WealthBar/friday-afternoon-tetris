@@ -4,12 +4,11 @@ dist/
 /.vscode
 /coverage
 /node_modules
-/.idea
+.idea/
 .env
 package-lock.json
 yarn-error.log
 log.txt
 *.csv
-invoices*/
 *.zip
 .nyc_cache/

@@ -4,27 +4,11 @@ let movementInputDelta = 0;
 let rotateKeyPressed = false;
 
 function rotateLeft(orientation) {
-  switch(orientation) {
-    case 'pieceDown':
-      return 'pieceRight';
-      break;
-    case 'pieceLeft':
-      return 'pieceDown';
-      break;
-    case 'pieceUp':
-      return 'pieceLeft';
-      break;
-    case 'pieceRight':
-      return 'pieceUp';
-      break;
-    default:
-      console.log('why');
-      break;
-  }
+  return (orientation + 1) % pieceMax;
 }
 
 function rotateRight(orientation) {
-  // TODO
+  return (orientation - 1) % pieceMax;
 }
 
 function handleRotate() {
@@ -41,9 +25,25 @@ function handleMovement(delta) {
   if (movementInputDelta > movementInputRate) {
     movementInputDelta -= movementInputRate;
     tetromino = tetrominos[droppingTetromino][pieceOrientation];
-    if (isNotColliding(keyPressed, droppingWidth, tetromino)) {
-      if (keyPressed.ArrowLeft) { droppingWidth -= 1; }
-      if (keyPressed.ArrowRight) { droppingWidth += 1; }
+
+    if (keyPressed.ArrowLeft) {
+      const collision = considerMovingThatWay({
+        offsetW: -1,
+        tetromino,
+      });
+      console.log(collision);
+      if (!collision) {
+        droppingWidth -= 1;
+      }
+    } else if (keyPressed.ArrowRight) {
+      const collision = considerMovingThatWay({
+        offsetW: 1,
+        tetromino,
+      });
+      console.log(collision);
+      if (!collision) {
+        droppingWidth += 1;
+      }
     }
   }
 }
@@ -51,7 +51,7 @@ function handleMovement(delta) {
 function handleKeyInputs(delta) {
   handleRotate();
   handleMovement(delta);
-  lastInputTime = Date.now
+  lastInputTime = Date.now;
 }
 
 function resetKeyPress() {
@@ -59,13 +59,21 @@ function resetKeyPress() {
 }
 
 // Event listeners
-document.addEventListener('keyup', (event) => {
-  const {key} = event;
-  delete keyPressed[key];
-  resetKeyPress();
-}, false);
+document.addEventListener(
+  'keyup',
+  (event) => {
+    const { key } = event;
+    delete keyPressed[key];
+    resetKeyPress();
+  },
+  false,
+);
 
-document.addEventListener('keydown', (event) => {
-  const {key} = event;
-  keyPressed[key] = 1;
-}, false);
+document.addEventListener(
+  'keydown',
+  (event) => {
+    const { key } = event;
+    keyPressed[key] = 1;
+  },
+  false,
+);
