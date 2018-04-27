@@ -14,7 +14,7 @@
   }
   
   function pickNewPiece() {
-
+    droppingTetromino = Math.floor(Math.random()*tetrominos.length);
   }
 
   function commitToWell(tetromino) {
