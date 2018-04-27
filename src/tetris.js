@@ -31,6 +31,10 @@
     }
   }
 
+  function clearLines() {
+
+  }
+
   function updateDrop(delta) {
     const tetromino = tetrominos[droppingTetromino][pieceOrientation];
 
@@ -53,6 +57,7 @@
 
         droppingWidth = wellWidth / 2;
         droppingHeight = wellHeight;
+        clearLines();
         pickNewPiece();
       }
     }
