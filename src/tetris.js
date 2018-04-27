@@ -12,7 +12,11 @@
       MainLoop.resetFrameDelta();
     }
   }
-  
+
+  function chooseTetrominoColor() {
+    return colorList[Math.floor(Math.random() * colorList.length)];
+  }
+
   function pickNewPiece() {
     droppingTetromino = Math.floor(Math.random()*tetrominos.length);
   }
@@ -53,6 +57,7 @@
 
         droppingHeight = wellHeight; // piece height
         pickNewPiece();
+        currentTetrominoGradient = chooseTetrominoColor();
       }
     }
   }
@@ -68,6 +73,6 @@
   function draw() {
     drawPlayerArea();
     drawWell();
-    drawTetromino(pieceOrientation);
+    drawTetromino(pieceOrientation, currentTetrominoGradient);
   }
 }
