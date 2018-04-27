@@ -31,8 +31,21 @@
     }
   }
 
-  function clearLines() {
+  function clearLine(row) {
+    for (let i = 1; i < tetrisWell.length-1; ++i) {
+      for (let j = 1; j < tetrisWell[i].length-1; ++j) {
+        tetrisWell[i][j] = tetrisWell[i+1][j]
+      }
+    }
+  }
 
+  function clearLines() {
+    for (let i = 1; i < tetrisWell.length; i++) {
+      const complete = tetrisWell[i].slice(1, tetrisWell[i].length - 1).every(x => x > 0 )
+      if (complete){
+        clearLine(i)
+      }
+    }
   }
 
   function updateDrop(delta) {
