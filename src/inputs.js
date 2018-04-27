@@ -14,13 +14,22 @@ function rotateRight(orientation) {
 function handleRotate() {
   if (keyPressed.ArrowUp && !rotateKeyPressed) {
     rotateKeyPressed = true;
-    pieceOrientation = rotateLeft(pieceOrientation);
-    playRotate();
+    const po = rotateLeft(pieceOrientation);
+    const tetromino = tetrominos[droppingTetromino][po];
+
+    const collision = considerMovingThatWay({
+      tetromino,
+    });
+
+    if (!collision) {
+      pieceOrientation = po;
+      playRotate();
+    }
     // TODO: Bump if out of bounds
   }
 }
 
-function handleLeftRightMovement() {
+function handleLeftRightMovement(tetromino) {
   const direction = keyPressed.ArrowRight ? 1 : -1;
 
   const collision = considerMovingThatWay({
@@ -29,7 +38,7 @@ function handleLeftRightMovement() {
   });
 
   if (!collision) {
-    droppingWidth -= direction;
+    droppingWidth += direction;
   }
 }
 
@@ -38,10 +47,10 @@ function handleMovement(delta) {
 
   if (movementInputDelta > movementInputRate) {
     movementInputDelta -= movementInputRate;
-    tetromino = tetrominos[droppingTetromino][pieceOrientation];
+    const tetromino = tetrominos[droppingTetromino][pieceOrientation];
 
     if (keyPressed.ArrowLeft || keyPressed.ArrowRight) {
-      handleLeftRightMovement();
+      handleLeftRightMovement(tetromino);
     }
   }
 }

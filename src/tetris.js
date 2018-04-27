@@ -14,6 +14,8 @@
   }
 
   function updateDrop(delta) {
+    const tetromino = tetrominos[droppingTetromino][pieceOrientation];
+
     droppingDelta += delta;
     if (droppingDelta > droppingRate) {
       const colliding = considerMovingThatWay({
