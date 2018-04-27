@@ -12,6 +12,24 @@
       MainLoop.resetFrameDelta();
     }
   }
+  
+  function pickNewPiece() {
+
+  }
+
+  function commitToWell(tetromino) {
+    for (let tH = 0; tH < tetromino.length; ++tH) {
+      for (let tW = 0; tW < tetromino[tH].length; ++tW) {
+        if (tetromino[tH][tW] === 0) {
+          continue;
+        }
+        let wellW = droppingWidth + tW;
+        let wellH = droppingHeight + tH;
+
+        tetrisWell[wellH][wellW] = tetromino[tH][tW];
+      }
+    }
+  }
 
   function updateDrop(delta) {
     const tetromino = tetrominos[droppingTetromino][pieceOrientation];
@@ -30,7 +48,11 @@
       } else {
         // todo: copy into well
         // todo: spawn new piece
+
+        commitToWell(tetromino);
+
         droppingHeight = wellHeight; // piece height
+        pickNewPiece();
       }
     }
   }
