@@ -29,6 +29,7 @@
         // todo: copy into well
         // todo: spawn new piece
         droppingHeight = wellHeight; // piece height
+        currentTetrominoGradient = pickTetrominoColor(trackedTetrominoPosition);
       }
     }
   }

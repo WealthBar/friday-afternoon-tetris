@@ -117,11 +117,9 @@ function drawTetromino(orientation) {
         },
       );
 
-      let gradient = pickTetrominoColor(
-        x,
-        y,
-      );
-      ctx.fillStyle = gradient;
+      trackedTetrominoPosition = { x, y }; // send to global vars
+
+      ctx.fillStyle = currentTetrominoGradient; // grab from global vars
       ctx.fillRect(
         x,
         y,

@@ -2,10 +2,7 @@ function randomizeTetrominoColor() {
   return colorList[Math.floor(Math.random() * colorList.length)];
 }
 
-function pickTetrominoColor(
-  x,
-  y,
-) {
+function pickTetrominoColor({x, y}) {
   let gradient = ctx.createRadialGradient(
     x,
     y,
