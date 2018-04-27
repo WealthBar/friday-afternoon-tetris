@@ -13,10 +13,6 @@
     }
   }
 
-  function chooseTetrominoColor() {
-    return colorList[Math.floor(Math.random() * colorList.length)];
-  }
-
   function pickNewPiece() {
     droppingTetromino = Math.floor(Math.random()*tetrominos.length);
   }
@@ -57,7 +53,7 @@
 
         droppingHeight = wellHeight; // piece height
         pickNewPiece();
-        currentTetrominoGradient = chooseTetrominoColor();
+        currentTetrominoGradient = chooseColor();
       }
     }
   }

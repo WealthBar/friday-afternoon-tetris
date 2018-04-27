@@ -16,4 +16,4 @@ let droppingTetromino = 1;
 let pieceOrientation = pieceDown;
 
 let trackedTetrominoPosition;
-let currentTetrominoGradient = 'red';
+let currentTetrominoGradient = chooseColor();
