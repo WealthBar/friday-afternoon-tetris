@@ -94,27 +94,6 @@ function drawWell() {
   }
 }
 
-function pickTetrominoColor(
-  x,
-  y,
-) {
-  let gradient = ctx.createRadialGradient(
-    x,
-    y,
-    10, x + 1, y + 1,
-    40,
-  );
-  gradient.addColorStop(
-    0,
-    'red',
-  ); // TODO: Cycle through colors
-  gradient.addColorStop(
-    1,
-    'white',
-  );
-  return gradient;
-}
-
 function drawTetromino(orientation) {
   // console.log(JSON.stringify(
   //   {
