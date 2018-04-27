@@ -98,6 +98,7 @@ function drawWell() {
 function pickTetrominoColor(
   x,
   y,
+  color,
 ) {
   let gradient = ctx.createRadialGradient(
     x,
@@ -107,8 +108,8 @@ function pickTetrominoColor(
   );
   gradient.addColorStop(
     0,
-    'red',
-  ); // TODO: Cycle through colors
+    color,
+  );
   gradient.addColorStop(
     1,
     'white',
@@ -116,7 +117,7 @@ function pickTetrominoColor(
   return gradient;
 }
 
-function drawTetromino(orientation) {
+function drawTetromino(orientation, color) {
   // console.log(JSON.stringify(
   //   {
   //     droppingWidth,
@@ -142,6 +143,7 @@ function drawTetromino(orientation) {
       let gradient = pickTetrominoColor(
         x,
         y,
+        color,
       );
       ctx.fillStyle = gradient;
       ctx.fillRect(
