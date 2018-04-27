@@ -23,10 +23,10 @@
         if (tetromino[tH][tW] === 0) {
           continue;
         }
-        let wellW = droppingWidth + tW;
-        let wellH = droppingHeight + tH;
+        let wellW = droppingWidth + tW + 1;
+        let wellH = droppingHeight + tH + 1;
 
-        tetrisWell[wellH][wellW] = tetromino[tH][tW];
+        tetrisWell[wellH][wellW] = 1; // tetromino[tH][tW];
       }
     }
   }
@@ -51,7 +51,8 @@
 
         commitToWell(tetromino);
 
-        droppingHeight = wellHeight; // piece height
+        droppingWidth = wellWidth / 2;
+        droppingHeight = wellHeight;
         pickNewPiece();
       }
     }

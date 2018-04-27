@@ -5,8 +5,8 @@ function considerMovingThatWay({ offsetW = 0, offsetH = 0, tetromino }) {
       if (tetromino[tH][tW] === 0) {
         continue;
       }
-      let wellW = droppingWidth + offsetW + tW;
-      let wellH = droppingHeight + offsetH + tH;
+      let wellW = droppingWidth + offsetW + tW + 1;
+      let wellH = droppingHeight + offsetH + tH + 1;
       if (wellH >= tetrisWell.length) {
         debugger;
       }

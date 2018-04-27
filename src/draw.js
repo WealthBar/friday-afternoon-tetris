@@ -36,7 +36,8 @@ function addBorders() {
 
 addBorders();
 
-tetrisWell[3][4] = 1;
+tetrisWell[2][wellWidth+1] = 1;
+
 
 let pieceWidth = canvas.width / wellWidth;
 let pieceHeight = canvas.height / wellHeight;
@@ -48,8 +49,8 @@ function toScreenCoords(
   },
 ) {
   return {
-    x: (w - 1) * pieceWidth,
-    y: canvas.height - h * pieceHeight,
+    x: w * pieceWidth,
+    y: canvas.height - (h+1) * pieceHeight,
   };
 }
 
@@ -75,7 +76,7 @@ function drawPlayerArea() {
 function drawWell() {
   for (let h = 0; h < wellHeight; ++h) {
     for (let w = 0; w < wellWidth; ++w) {
-      if (tetrisWell[h][w] !== 0) {
+      if (tetrisWell[h+1][w+1] !== 0) {
         const { x, y } = toScreenCoords(
           {
             h,
