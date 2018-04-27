@@ -20,30 +20,28 @@ function handleRotate() {
   }
 }
 
+function handleLeftRightMovement() {
+  const direction = keyPressed.ArrowRight ? 1 : -1;
+
+  const collision = considerMovingThatWay({
+    offsetW: direction,
+    tetromino,
+  });
+
+  if (!collision) {
+    droppingWidth -= direction;
+  }
+}
+
 function handleMovement(delta) {
   movementInputDelta += delta;
+
   if (movementInputDelta > movementInputRate) {
     movementInputDelta -= movementInputRate;
     tetromino = tetrominos[droppingTetromino][pieceOrientation];
 
-    if (keyPressed.ArrowLeft) {
-      const collision = considerMovingThatWay({
-        offsetW: -1,
-        tetromino,
-      });
-      console.log(collision);
-      if (!collision) {
-        droppingWidth -= 1;
-      }
-    } else if (keyPressed.ArrowRight) {
-      const collision = considerMovingThatWay({
-        offsetW: 1,
-        tetromino,
-      });
-      console.log(collision);
-      if (!collision) {
-        droppingWidth += 1;
-      }
+    if (keyPressed.ArrowLeft || keyPressed.ArrowRight) {
+      handleLeftRightMovement();
     }
   }
 }
