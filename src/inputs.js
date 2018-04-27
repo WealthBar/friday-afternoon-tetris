@@ -2,6 +2,7 @@ const keyPressed = Object.create(null);
 const movementInputRate = 100;
 let movementInputDelta = 0;
 let rotateKeyPressed = false;
+let downKeyPressed = false;
 
 function rotateLeft(orientation) {
   return (orientation + 1) % pieceMax;
@@ -14,15 +15,15 @@ function rotateRight(orientation) {
 function handleRotate() {
   if (keyPressed.ArrowUp && !rotateKeyPressed) {
     rotateKeyPressed = true;
-    const po = rotateLeft(pieceOrientation);
-    const tetromino = tetrominos[droppingTetromino][po];
+    const potentialOrientation = rotateLeft(pieceOrientation);
+    const tetromino = tetrominos[droppingTetromino][potentialOrientation];
 
     const collision = considerMovingThatWay({
       tetromino,
     });
 
     if (!collision) {
-      pieceOrientation = po;
+      pieceOrientation = potentialOrientation;
       playRotate();
     }
     // TODO: Bump if out of bounds
@@ -42,8 +43,18 @@ function handleLeftRightMovement(tetromino) {
   }
 }
 
+function handleDrop() {
+  droppingRate = downKeyPressed ? fastDroppingRate : defaultDroppingRate;
+}
+
 function handleMovement(delta) {
   movementInputDelta += delta;
+
+
+  if (keyPressed.ArrowDown) {
+    downKeyPressed = true;
+  }
+  handleDrop();
 
   if (movementInputDelta > movementInputRate) {
     movementInputDelta -= movementInputRate;
@@ -63,6 +74,7 @@ function handleKeyInputs(delta) {
 
 function resetKeyPress() {
   rotateKeyPressed = false;
+  downKeyPressed = false;
 }
 
 // Event listeners
