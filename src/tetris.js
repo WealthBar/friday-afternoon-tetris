@@ -14,7 +14,7 @@
   }
 
   function pickNewPiece() {
-    droppingTetromino = Math.floor(Math.random()*tetrominos.length);
+    droppingTetromino = Math.floor(Math.random()*tetrominos.length); 
   }
 
   function commitToWell(tetromino) {
@@ -40,7 +40,7 @@
   }
 
   function clearLines() {
-    for (let i = 1; i < tetrisWell.length; i++) {
+    for (let i = tetrisWell.length-1; i > 0 ; i--) {
       const complete = tetrisWell[i].slice(1, tetrisWell[i].length - 1).every(x => x > 0 )
       if (complete){
         clearLine(i)
