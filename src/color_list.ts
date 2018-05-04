@@ -1,4 +1,4 @@
-const colorList = [
+export const colorList = [
   "AliceBlue",
   "Aqua",
   "Aquamarine",

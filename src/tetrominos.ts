@@ -1,5 +1,5 @@
 // Tetromino
-const tetrominos =
+export const tetrominos =
   [
     [
       [ // L
@@ -190,9 +190,9 @@ function rotateCw(matrix) {
   const w = matrix.length;
   const h = matrix[0].length;
 
-  const result = [];
+  const result:number[][] = [];
   for (let hi = 0; hi < h; ++hi) {
-    const row = [];
+    const row:number[] = [];
     result.push(row);
     for (let wi = w - 1; wi >= 0; --wi) {
       row.push(matrix[wi][hi]);
@@ -205,9 +205,9 @@ function rotateCcw(matrix) {
   const w = matrix.length;
   const h = matrix[0].length;
 
-  const result = [];
+  const result: number[][] = [];
   for (let hi = h-1; hi >= 0; --hi) {
-    const row = [];
+    const row:number[] = [];
     result.push(row);
     for (let wi = 0; wi < w; ++wi) {
       row.push(matrix[wi][hi]);

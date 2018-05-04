@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "object-literal-sort-keys": false,
+    "max-line-length": [false],
+    "no-console": false,
+    "no-shadowed-variable": false,
+    "forin": false,
+    "no-empty": false,
+    "only-arrow-functions": false,
+    "no-bitwise": false
+  },
+  "rulesDirectory": []
+}

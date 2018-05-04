@@ -1,4 +1,8 @@
 // todo: move initialization stuff out to somewhere else
+import {gameState} from "./globals";
+import {tetrominos} from "./tetrominos";
+import {canvasCtor} from "./canvas";
+
 function createGrid(
   {
     width,
@@ -13,34 +17,38 @@ function createGrid(
   return grid;
 }
 
-let tetrisWell = createGrid(
+gameState.tetrisWell = createGrid(
   {
-    width: wellWidth + 2,
-    height: wellHeight + 5,
+    width: gameState.wellWidth + 2,
+    height: gameState.wellHeight + 5,
   },
 );
+
+const canvasState = canvasCtor();
+let ctx = canvasState.ctx;
+let canvas = canvasState.canvas;
 
 const wellBorderLeft = -1;
 const wellBorderRight = -2;
 const wellBorderBottom = -3;
 
 function addBorders() {
-  for (let i = 0; i < tetrisWell.length; ++i) {
-    tetrisWell[i][0] = wellBorderLeft;
-    tetrisWell[i][wellWidth + 1] = wellBorderRight;
+  for (let i = 0; i < gameState.tetrisWell.length; ++i) {
+    gameState.tetrisWell[i][0] = wellBorderLeft;
+    gameState.tetrisWell[i][gameState.wellWidth + 1] = wellBorderRight;
   }
-  for (let i = 0; i < tetrisWell[0].length; ++i) {
-    tetrisWell[0][i] = wellBorderBottom;
+  for (let i = 0; i < gameState.tetrisWell[0].length; ++i) {
+    gameState.tetrisWell[0][i] = wellBorderBottom;
   }
 }
 
 addBorders();
 
-tetrisWell[2][wellWidth+1] = 1;
+gameState.tetrisWell[2][gameState.wellWidth+1] = 1;
 
 
-let pieceWidth = canvas.width / wellWidth;
-let pieceHeight = canvas.height / wellHeight;
+let pieceWidth = canvas.width / gameState.wellWidth;
+let pieceHeight = canvas.height / gameState.wellHeight;
 
 function toScreenCoords(
   {
@@ -74,9 +82,9 @@ function drawPlayerArea() {
 }
 
 function drawWell() {
-  for (let h = 0; h < wellHeight; ++h) {
-    for (let w = 0; w < wellWidth; ++w) {
-      if (tetrisWell[h+1][w+1] !== 0) {
+  for (let h = 0; h < gameState.wellHeight; ++h) {
+    for (let w = 0; w < gameState.wellWidth; ++w) {
+      if (gameState.tetrisWell[h+1][w+1] !== 0) {
         const { x, y } = toScreenCoords(
           {
             h,
@@ -126,7 +134,7 @@ function drawTetromino(orientation, color) {
   //   undefined,
   //   2,
   // ));
-  currentTetromino = tetrominos[droppingTetromino][orientation];
+  let currentTetromino = tetrominos[gameState.droppingTetromino][orientation];
   for (let i = 0; i < currentTetromino.length; i++) {
     for (let j = 0; j < currentTetromino[i].length; j++) {
       if (currentTetromino[i][j] !== 1) {
@@ -135,16 +143,17 @@ function drawTetromino(orientation, color) {
 
       const { x, y } = toScreenCoords(
         {
-          h: droppingHeight + i,
-          w: droppingWidth + j,
+          h: gameState.droppingHeight + i,
+          w: gameState.droppingWidth + j,
         },
       );
 
-      let gradient = pickTetrominoColor(
+      const gradient = pickTetrominoColor(
         x,
         y,
         color,
       );
+
       ctx.fillStyle = gradient;
       ctx.fillRect(
         x,
@@ -154,4 +163,10 @@ function drawTetromino(orientation, color) {
       );
     }
   }
+}
+
+export function draw() {
+  drawPlayerArea();
+  drawWell();
+  drawTetromino(gameState.pieceOrientation, gameState.currentTetrominoGradient);
 }

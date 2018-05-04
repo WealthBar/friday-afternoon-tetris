@@ -1,29 +1,35 @@
+import {gameState} from "./globals";
+import {tetrominos} from "./tetrominos";
+import {considerMovingThatWay} from "./collisions";
+import {playRotate} from "./audio";
+
 const keyPressed = Object.create(null);
 const movementInputRate = 100;
 let movementInputDelta = 0;
 let rotateKeyPressed = false;
 let downKeyPressed = false;
+let lastInputTime = Date.now();
 
 function rotateLeft(orientation) {
-  return (orientation + 1) % pieceMax;
+  return (orientation + 1) % gameState.pieceMax;
 }
 
 function rotateRight(orientation) {
-  return (orientation - 1) % pieceMax;
+  return (orientation - 1) % gameState.pieceMax;
 }
 
 function handleRotate() {
   if (keyPressed.ArrowUp && !rotateKeyPressed) {
     rotateKeyPressed = true;
-    const potentialOrientation = rotateLeft(pieceOrientation);
-    const tetromino = tetrominos[droppingTetromino][potentialOrientation];
+    const potentialOrientation = rotateLeft(gameState.pieceOrientation);
+    const tetromino = tetrominos[gameState.droppingTetromino][potentialOrientation];
 
     const collision = considerMovingThatWay({
       tetromino,
     });
 
     if (!collision) {
-      pieceOrientation = potentialOrientation;
+      gameState.pieceOrientation = potentialOrientation;
       playRotate();
     }
     // TODO: Bump if out of bounds
@@ -39,12 +45,12 @@ function handleLeftRightMovement(tetromino) {
   });
 
   if (!collision) {
-    droppingWidth += direction;
+    gameState.droppingWidth += direction;
   }
 }
 
 function handleDrop() {
-  droppingRate = downKeyPressed ? fastDroppingRate : defaultDroppingRate;
+  gameState.droppingRate = downKeyPressed ? gameState.fastDroppingRate : gameState.defaultDroppingRate;
 }
 
 function handleMovement(delta) {
@@ -58,7 +64,7 @@ function handleMovement(delta) {
 
   if (movementInputDelta > movementInputRate) {
     movementInputDelta -= movementInputRate;
-    const tetromino = tetrominos[droppingTetromino][pieceOrientation];
+    const tetromino = tetrominos[gameState.droppingTetromino][gameState.pieceOrientation];
 
     if (keyPressed.ArrowLeft || keyPressed.ArrowRight) {
       handleLeftRightMovement(tetromino);
@@ -66,10 +72,10 @@ function handleMovement(delta) {
   }
 }
 
-function handleKeyInputs(delta) {
+export function handleKeyInputs(delta) {
   handleRotate();
   handleMovement(delta);
-  lastInputTime = Date.now;
+  lastInputTime = Date.now();
 }
 
 function resetKeyPress() {
