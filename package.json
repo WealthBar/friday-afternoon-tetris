@@ -26,6 +26,7 @@
     "mocha-webpack": "^1.1.0",
     "node": "^9",
     "nyc": "^11.7.1",
+    "random-js": "^1.0.8",
     "sinon": "^5.0.3",
     "ts-loader": "^4.2.0",
     "ts-node": "^6.0.2",
