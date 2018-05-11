@@ -1,7 +1,7 @@
 import {gameState} from "./globals";
 
-export function clearLinesCtor(tetrisWell) {
-  function clearLine(row) {
+export function clearLinesCtor() {
+  function clearLine(tetrisWell, row) {
     for (let i = row; i < tetrisWell.length - 1; ++i) {
       for (let j = 1; j < tetrisWell[i].length - 1; ++j) {
         tetrisWell[i][j] = tetrisWell[i + 1][j];
@@ -9,7 +9,8 @@ export function clearLinesCtor(tetrisWell) {
     }
   }
 
-  function execute() {
+  function execute(tetrisWell) {
+    console.log("clearlines");
     for (let i = tetrisWell.length - 2; i > 0; --i) {
       const slice = tetrisWell[i]
         .slice(1, tetrisWell[i].length - 1);
@@ -18,15 +19,14 @@ export function clearLinesCtor(tetrisWell) {
           x => x > 0);
 
       if (complete) {
-        clearLine(i);
+        clearLine(tetrisWell, i);
       }
     }
   }
 
   return {
-    tetrisWell,
     execute,
   };
 }
 
-export const clearLines = clearLinesCtor(gameState.tetrisWell).execute;
+export const clearLines = clearLinesCtor().execute;

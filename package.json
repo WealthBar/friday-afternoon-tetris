@@ -4,7 +4,7 @@
   "description": "",
   "main": "tetris.js",
   "scripts": {
-    "build": "rm -rf dist; rm -rf public; tsc",
+    "build": "rm -rf dist; rm -rf public; tsc; webpack",
     "add-coverage-ignores": "ts-node scripts/add-coverage-ignores.ts",
     "test": "yarn build; yarn add-coverage-ignores; NODE_ENV=test nyc mocha -r source-map-support/register --full-trace 'dist/**/*.test.js'"
   },

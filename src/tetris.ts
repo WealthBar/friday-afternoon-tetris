@@ -64,7 +64,7 @@ import {draw} from "./draw";
 
         gameState.droppingWidth = gameState.wellWidth / 2;
         gameState.droppingHeight = gameState.wellHeight;
-        clearLines();
+        clearLines(gameState.tetrisWell);
         pickNewPiece();
         gameState.currentTetrominoGradient = chooseColor();
       }

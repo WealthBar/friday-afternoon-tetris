@@ -25,8 +25,8 @@ describe(
           [-1, 0, 0, -1],
         ];
 
-        const subject = clearLinesCtor(well);
-        subject.execute();
+        const subject = clearLinesCtor();
+        subject.execute(well);
 
         assert.deepEqual(
           well,
