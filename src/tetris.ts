@@ -25,7 +25,7 @@ import {draw} from "./draw";
   }
 
   function pickNewPiece() {
-    gameState.droppingTetromino = Math.floor(Math.random()*tetrominos.length);
+    gameState.droppingTetromino = gameState.random.integer(1, tetrominos.length) - 1;
   }
 
   function commitToWell(tetromino) {
