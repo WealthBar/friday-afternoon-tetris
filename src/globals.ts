@@ -9,6 +9,7 @@ export const gameState: any = {
   pieceDown: 2,
   pieceLeft: 3,
   pieceMax: 4,
+  // recommended to make one of these per process
   random: new Random(Random.engines.mt19937().autoSeed()),
 
 

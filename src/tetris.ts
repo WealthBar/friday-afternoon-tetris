@@ -25,6 +25,7 @@ import {draw} from "./draw";
   }
 
   function pickNewPiece() {
+    // -1 is to allow for range in 0 based Array
     gameState.droppingTetromino = gameState.random.integer(1, tetrominos.length) - 1;
   }
 
